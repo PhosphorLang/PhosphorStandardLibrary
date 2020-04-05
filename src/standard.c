@@ -31,3 +31,12 @@ void* new (unsigned long long size)
 
     return result;
 }
+
+void delete (void* address, unsigned long long size)
+{
+    unsigned long long syscode = 11; // Syscall ID for munmap
+
+    asm("syscall" : : "D" (address), "S" (size), "a" (syscode));
+
+    return;
+}
