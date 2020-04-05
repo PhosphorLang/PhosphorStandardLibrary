@@ -1,3 +1,12 @@
+extern __attribute__((noreturn)) void exit ();
+    // The following trick of having a full Assembly function is necessary because otherwise gcc adds a return statement at the end.
+    asm(".globl exit");
+    asm(".type exit, @function");
+    asm("exit:");
+    asm("mov rdi, 0");
+    asm("mov rax, 60"); // Syscall ID for exit
+    asm("syscall");
+
 void print (void* address, unsigned long long int size)
 {
     void* address_param;
