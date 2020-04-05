@@ -7,18 +7,12 @@ extern __attribute__((noreturn)) void exit ();
     asm("mov rax, 60"); // Syscall ID for exit
     asm("syscall");
 
-void print (void* address, unsigned long long int size)
+void print (const void* address, unsigned long long size)
 {
-    void* address_param;
-    unsigned long int file_descriptor, syscode;
-    unsigned long long int size_param;
+    unsigned long long file_descriptor = 1; // File descriptor ID for stdout
+    unsigned long long syscode = 1; // Syscall ID for writing
 
-    asm("mov rdx, rsi" : "=d" (size_param) : "S" (size));
-    asm("mov rsi, rdi" : "=S" (address_param) : "D" (address));
-    asm("mov rdi, 1" : "=D" (file_descriptor)); // File descriptor ID for stdout
-    asm("mov rax, 1" : "=a" (syscode)); // Syscall ID for writing
-
-    asm("syscall" : : "D" (file_descriptor), "S" (address_param), "d" (size_param), "a" (syscode));
+    asm("syscall" : : "d" (size), "S" (address), "D" (file_descriptor), "a" (syscode));
 
     return;
 }
