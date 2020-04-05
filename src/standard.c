@@ -40,3 +40,13 @@ void delete (void* address, unsigned long long size)
 
     return;
 }
+
+void copy (char* destination, char* source, unsigned long long int size)
+{
+    for (unsigned long long int i; i < size; i++)
+    {
+        destination[i] = source[i];
+    }
+
+    return;
+}
