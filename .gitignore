@@ -1,0 +1,11 @@
+# No browser specific configs:
+.vscode
+.idea
+
+# Ignore Mac files:
+.DS_Store
+*.DS_Store
+
+# No builds:
+bin/**/*
+tmp/**/*
