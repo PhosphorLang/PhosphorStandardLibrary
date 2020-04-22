@@ -2,7 +2,7 @@
 
 [section .text]
 
-    [section .text.print,"ax",@progbits]
+    [section .text.exit,"ax",@progbits]
     [global exit]
     exit:
         mov rdi, 0 ; Exit code

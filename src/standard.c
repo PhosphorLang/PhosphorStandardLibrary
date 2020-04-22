@@ -16,7 +16,7 @@ void* new (unsigned long long size)
     register long long file_descriptor asm("r8") = -1;
     register unsigned long long offset asm("r9") = 0;
     unsigned long long syscode = 9; // Syscall ID for mmap
-    void * result;
+    void* result;
 
     asm("syscall" : "=a" (result) : "S" (size), "D" (address), "d" (prot), "r" (flags), "r" (file_descriptor), "r" (offset), "a" (syscode));
 
@@ -32,9 +32,9 @@ void delete (void* address, unsigned long long size)
     return;
 }
 
-void copy (char* destination, char* source, unsigned long long int size)
+void copy (char* destination, char* source, unsigned long long size)
 {
-    for (unsigned long long int i; i < size; i++)
+    for (unsigned long long i = 0; i < size; i++)
     {
         destination[i] = source[i];
     }
