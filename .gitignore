@@ -7,5 +7,6 @@
 *.DS_Store
 
 # No builds:
+obj/**/*
 bin/**/*
 tmp/**/*
