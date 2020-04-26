@@ -1,5 +1,3 @@
-; Standard library
-
 [section .text]
 
     [section .text.exit,"ax",@progbits]
