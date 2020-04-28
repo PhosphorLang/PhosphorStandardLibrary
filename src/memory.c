@@ -5,12 +5,12 @@ void* new (UInt size)
     void* address = 0;
     UInt prot = 0x3; // 0x3 = PROT_READ|PROT_WRITE
     register UInt flags asm("r10") = 0x22; // 0x22 = MAP_PRIVATE|MAP_ANONYMOUS
-    register Int file_descriptor asm("r8") = -1;
+    register Int fileDescriptor asm("r8") = -1;
     register UInt offset asm("r9") = 0;
     Int syscode = 9; // Syscall ID for mmap
     void* result;
 
-    asm("syscall" : "=a" (result) : "S" (size), "D" (address), "d" (prot), "r" (flags), "r" (file_descriptor), "r" (offset), "a" (syscode));
+    asm("syscall" : "=a" (result) : "S" (size), "D" (address), "d" (prot), "r" (flags), "r" (fileDescriptor), "r" (offset), "a" (syscode));
 
     return result;
 }
