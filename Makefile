@@ -1,6 +1,7 @@
 SOURCE_DIRECTORY := src
 TEMPORY_DIRECTORY := tmp
 OBJECT_DIRECTORY := obj
+BINARY_DIRECTORY := bin
 
 GCC_FLAGS := -fdata-sections \
 			 -ffunction-sections \
@@ -14,6 +15,8 @@ GCC_FLAGS := -fdata-sections \
 NASM_FLAGS := -a
 
 NASM_FORMAT := elf64
+
+AR_FLAGS := crs
 
 C_SOURCE_FILES := $(SOURCE_DIRECTORY)/%.c
 ASM_SOURCE_FILES := $(SOURCE_DIRECTORY)/%.asm
@@ -30,14 +33,20 @@ ASM_OBJECTS := $(patsubst $(ASM_SOURCE_FILES), $(OBJECT_FILES), $(ASM_SOURCES))
 
 .PRECIOUS: $(OBJECT_FILES)
 .PRECIOUS: $(ASSEMBLY_FILES)
+.PRECIOUS: $(RESULT_FILE)
 
 .PHONY: all
-all: $(C_OBJECTS) $(ASM_OBJECTS)
+all: $(RESULT_FILE)
+
+$(RESULT_FILE): $(C_OBJECTS) $(ASM_OBJECTS)
+#	# Compile object files into static library:
+	ar $(AR_FLAGS) $(RESULT_FILE) $(C_OBJECTS) $(ASM_OBJECTS)
 
 .PHONY: clean
 clean:
 	rm -rf $(TEMPORY_DIRECTORY)/*.s
 	rm -rf $(OBJECT_DIRECTORY)/*.o
+	rm -rf $(RESULT_FILE)
 
 # C sources to C Assembly:
 $(ASSEMBLY_FILES): $(C_SOURCE_FILES)
