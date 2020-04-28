@@ -19,4 +19,8 @@ typedef unsigned char Bool;
     typedef unsigned long long UInt;
     typedef double Float;
 
+#else
+
+    #error "Architecture is not supported."
+
 #endif
