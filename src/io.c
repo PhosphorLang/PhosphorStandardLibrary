@@ -1,7 +1,9 @@
-void print (const void* address, unsigned long long size)
+#include "types.h"
+
+void print (const void* address, const UInt size)
 {
-    long long file_descriptor = 1; // File descriptor ID for stdout
-    unsigned long long syscode = 1; // Syscall ID for writing
+    Int file_descriptor = 1; // File descriptor ID for stdout
+    UInt syscode = 1; // Syscall ID for writing
 
     asm("syscall" : : "d" (size), "S" (address), "D" (file_descriptor), "a" (syscode));
 
