@@ -1,5 +1,10 @@
 #include "types.h"
 
+/**
+ * Allocate memory on the heap.
+ * @param size The size of the memory block to allocate.
+ * @return The pointer to the allocated memory.
+ */
 void* new (UInt size)
 {
     void* address = 0;
@@ -15,6 +20,11 @@ void* new (UInt size)
     return result;
 }
 
+/**
+ * Free allocated heap memory.
+ * @param address The pointer to the memory to free.
+ * @param size The size of the memory block.
+ */
 void delete (void* address, UInt size)
 {
     UInt syscode = 11; // Syscall ID for munmap
@@ -24,6 +34,12 @@ void delete (void* address, UInt size)
     return;
 }
 
+/**
+ * Direct memory to memory copy.
+ * @param destination The location to copy the block to.
+ * @param source The location to copy the block from.
+ * @param size The size of the memory block to copy.
+ */
 void copy (UInt8* destination, UInt8* source, UInt size)
 {
     for (UInt i = 0; i < size; i++)

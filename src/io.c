@@ -1,6 +1,10 @@
 #include "types.h"
 #include "string.h"
 
+/**
+ * Print a string to the console.
+ * @param text The string to print.
+ */
 void print (const String text)
 {
     Int fileDescriptor = 1; // File descriptor ID for stdout
