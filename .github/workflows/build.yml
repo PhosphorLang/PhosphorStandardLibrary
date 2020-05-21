@@ -5,20 +5,7 @@ on: ["push", "pull_request"]
 jobs:
   building:
     name: Building
-    runs-on: ${{ matrix.os }}
-
-    continue-on-error: ${{ matrix.experimental }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        experimental: [false]
-        include:
-          - os: windows-latest
-            experimental: true
-          - os: macos-latest
-            experimental: true
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone repository
