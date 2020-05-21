@@ -1,3 +1,5 @@
+[![Build](https://github.com/PhosphorLang/StandardLibrary/workflows/Build/badge.svg)](https://github.com/PhosphorLang/StandardLibrary/actions)
+
 # **The Phosphor Standard Library**
 
 The standard library for the Phosphor programming language.
