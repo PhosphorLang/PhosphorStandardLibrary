@@ -36,11 +36,17 @@ ASM_OBJECTS := $(patsubst $(ASM_SOURCE_FILES), $(OBJECT_FILES), $(ASM_SOURCES))
 .PRECIOUS: $(RESULT_FILE)
 
 .PHONY: all
-all: $(RESULT_FILE)
+all: prepare $(RESULT_FILE)
 
 $(RESULT_FILE): $(C_OBJECTS) $(ASM_OBJECTS)
 #	# Compile object files into static library:
 	ar $(AR_FLAGS) $(RESULT_FILE) $(C_OBJECTS) $(ASM_OBJECTS)
+
+.PHONY: prepare
+prepare:
+	mkdir -p "$(TEMPORY_DIRECTORY)"
+	mkdir -p "$(OBJECT_DIRECTORY)"
+	mkdir -p "$(BINARY_DIRECTORY)"
 
 .PHONY: clean
 clean:
