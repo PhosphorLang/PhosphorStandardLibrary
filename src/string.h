@@ -15,4 +15,5 @@ typedef struct
  */
 typedef const StringValue* String;
 
+Bool stringsAreEqual (const String string1, const String string2);
 String createString (const UInt8* data, UInt size);
