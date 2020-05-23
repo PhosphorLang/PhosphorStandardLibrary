@@ -38,6 +38,7 @@ ASM_OBJECTS := $(patsubst $(ASM_SOURCE_FILES), $(OBJECT_FILES), $(ASM_SOURCES))
 
 .PHONY: all
 all: prepare $(RESULT_FILE)
+	@echo "Make completed."
 
 $(RESULT_FILE): $(C_OBJECTS) $(ASM_OBJECTS)
 #	# Compile object files into static library:
