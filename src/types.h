@@ -29,6 +29,8 @@ typedef enum {
     true = 1,
 } __attribute__((__packed__)) Bool;
 
+#define null 0
+
 #if defined(__LP64__) || defined(_LP64)
 
     /** Architecture (word size) dependent signed integer */
