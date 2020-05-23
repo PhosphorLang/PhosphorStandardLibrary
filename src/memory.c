@@ -44,7 +44,7 @@ void free (void* address, UInt size)
  * @param source The location to copy the block from.
  * @param size The size of the memory block to copy.
  */
-void copy (UInt8* destination, UInt8* source, UInt size)
+void copy (UInt8* destination, const UInt8* source, UInt size)
 {
     for (UInt i = 0; i < size; i++)
     {
