@@ -7,7 +7,7 @@ typedef struct
 {
     const UInt size;
     const UInt8 data[];
-} StringValue;
+} __attribute__((__packed__)) StringValue;
 
 /**
  * The pointer to a string value.
