@@ -1,3 +1,5 @@
+#pragma once
+
 /** 1 Byte signed integer */
 typedef signed char Int8;
 /** 2 Byte signed integer */

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "types.h"
 
 /** A string value contains the size of the data as an integer and the data itself as an array. */
