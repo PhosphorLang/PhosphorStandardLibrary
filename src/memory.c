@@ -5,7 +5,7 @@
  * @param size The size of the memory block to allocate.
  * @return The pointer to the allocated memory.
  */
-void* new (UInt size)
+void* alloc (UInt size)
 {
     void* address = 0;
     UInt prot = 0x3; // 0x3 = PROT_READ|PROT_WRITE
@@ -25,7 +25,7 @@ void* new (UInt size)
  * @param address The pointer to the memory to free.
  * @param size The size of the memory block.
  */
-void delete (void* address, UInt size)
+void free (void* address, UInt size)
 {
     UInt syscode = 11; // Syscall ID for munmap
 
