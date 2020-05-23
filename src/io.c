@@ -10,7 +10,9 @@ void print (const String text)
     Int fileDescriptor = 1; // File descriptor ID for stdout
     UInt syscode = 1; // Syscall ID for writing
 
-    asm("syscall" : : "d" (text->size), "S" (text->data), "D" (fileDescriptor), "a" (syscode));
+    Int result;
 
-    return;
+    asm volatile ("syscall" : "=a" (result) : "d" (text->size), "S" (text->data), "D" (fileDescriptor), "a" (syscode));
+
+    // TODO: Check if result is an error (-1) or less than the text size.
 }

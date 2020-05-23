@@ -15,7 +15,7 @@ void* alloc (UInt size)
     Int syscode = 9; // Syscall ID for mmap
     void* result;
 
-    asm("syscall" : "=a" (result) : "S" (size), "D" (address), "d" (prot), "r" (flags), "r" (fileDescriptor), "r" (offset), "a" (syscode));
+    asm volatile ("syscall" : "=a" (result) : "S" (size), "D" (address), "d" (prot), "r" (flags), "r" (fileDescriptor), "r" (offset), "a" (syscode));
 
     return result;
 }
@@ -29,7 +29,11 @@ void free (void* address, UInt size)
 {
     UInt syscode = 11; // Syscall ID for munmap
 
-    asm("syscall" : : "D" (address), "S" (size), "a" (syscode));
+    Int result;
+
+    asm volatile ("syscall" : "=a" (result) : "D" (address), "S" (size), "a" (syscode));
+
+    // TODO: Check result (0 on success, -1 on failure).
 
     return;
 }
