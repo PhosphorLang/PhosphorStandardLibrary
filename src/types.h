@@ -24,7 +24,10 @@ typedef float Float32;
 typedef double Float64;
 
 /** 1 Byte Boolean */
-typedef unsigned char Bool;
+typedef enum {
+    false = 0,
+    true = 1,
+} __attribute__((__packed__)) Bool;
 
 #if defined(__LP64__) || defined(_LP64)
 
