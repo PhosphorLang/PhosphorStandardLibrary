@@ -15,4 +15,10 @@ void print (const String text)
     asm volatile ("syscall" : "=a" (result) : "d" (text->size), "S" (text->data), "D" (fileDescriptor), "a" (syscode));
 
     // TODO: Check if result is an error (-1) or less than the text size.
+
+    // Print line break:
+    asm volatile ("syscall" : "=a" (result) : "d" (1), "S" ("\n"), "D" (fileDescriptor), "a" (syscode));
+
+    // TODO: Check result.
+    // TODO: Replace hardcoded line break with a system dependent constant.
 }
