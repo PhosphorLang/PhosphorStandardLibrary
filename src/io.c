@@ -2,10 +2,10 @@
 #include "string.h"
 
 /**
- * Print a string to the console.
- * @param text The string to print.
+ * Writes a string to the standard output, followed by a line break.
+ * @param text The string to write.
  */
-void print (const String text)
+void writeLine (const String text)
 {
     Int fileDescriptor = 1; // File descriptor ID for stdout
     UInt syscode = 1; // Syscall ID for writing
