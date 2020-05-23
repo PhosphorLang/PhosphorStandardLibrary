@@ -14,3 +14,5 @@ typedef struct
  * A string value contains the size of the data as an integer and the data itself as an array.
  */
 typedef const StringValue* String;
+
+String createString (const UInt8* data, UInt size);
