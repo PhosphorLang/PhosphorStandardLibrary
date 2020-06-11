@@ -17,3 +17,9 @@ typedef const StringValue* String;
 
 Bool stringsAreEqual (const String string1, const String string2);
 String createString (const UInt8* data, UInt size);
+
+/**
+ * Converts an integer into a string.
+ * @return A new string instance, representing the given integer value.
+ */
+String intToString (Int integer);

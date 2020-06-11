@@ -34,3 +34,44 @@ String createString (const UInt8* data, UInt size)
 
     return (String)stringArray;
 }
+
+String intToString (Int integer)
+{
+    // The following is a hack.
+    // The string length of a number in decimal (including the minus for negative values) is never greater then three times plus one
+    // of the number of bytes in binary notation. We need this for the memory allocation of the buffer.
+    const UInt maxStringLength = sizeof(Int) * 3 + 1;
+
+    UInt8 characters[maxStringLength];
+
+    UInt stringLength = 0;
+    Int rest = integer;
+
+    if (rest < 0)
+    {
+        rest *= -1;
+    }
+
+    do
+    {
+        UInt8 character = rest % 10 + '0';
+
+        characters[maxStringLength - stringLength - 1] = character;
+
+        stringLength++;
+
+        rest = rest / 10;
+    }
+    while (rest != 0);
+
+    if (integer < 0)
+    {
+        characters[maxStringLength - stringLength - 1] = '-';
+
+        stringLength++;
+    }
+
+    String result = createString(&characters[maxStringLength - stringLength], stringLength);
+
+    return result;
+}
