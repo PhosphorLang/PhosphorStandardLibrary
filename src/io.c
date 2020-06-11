@@ -13,12 +13,16 @@ void writeLine (const String text)
 
     Int result;
 
-    asm volatile ("syscall" : "=a" (result) : "d" (text->size), "S" (text->data), "D" (fileDescriptor), "a" (syscode));
+    asm volatile ("syscall" : "=a" (result)
+                            : "d" (text->size), "S" (text->data), "D" (fileDescriptor), "a" (syscode)
+                            : "rcx", "r11");
 
     // TODO: Check if result is an error (-1) or less than the text size.
 
     // Print line break:
-    asm volatile ("syscall" : "=a" (result) : "d" (1), "S" ("\n"), "D" (fileDescriptor), "a" (syscode));
+    asm volatile ("syscall" : "=a" (result)
+                            : "d" (1), "S" ("\n"), "D" (fileDescriptor), "a" (syscode)
+                            : "rcx", "r11");
 
     // TODO: Check result.
     // TODO: Replace hardcoded line break with a system dependent constant.
@@ -42,7 +46,9 @@ String readLine ()
 
     while (true)
     {
-        asm volatile ("syscall" : "=a" (bytesRead) : "d" (bufferSize), "S" (&buffer[0]), "D" (fileDescriptor), "a" (syscode));
+        asm volatile ("syscall" : "=a" (bytesRead)
+                                : "d" (bufferSize), "S" (&buffer[0]), "D" (fileDescriptor), "a" (syscode)
+                                : "rcx", "r11");
 
         // TODO: Check for errors (bytesRead is -1).
 
