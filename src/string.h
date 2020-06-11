@@ -23,3 +23,9 @@ String createString (const UInt8* data, UInt size);
  * @return A new string instance, representing the given integer value.
  */
 String intToString (Int integer);
+
+/**
+ * Convert a string into an integer.
+ * @return The integer value the given string represents.
+ */
+Int stringToInt (const String string);

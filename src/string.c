@@ -75,3 +75,32 @@ String intToString (Int integer)
 
     return result;
 }
+
+Int stringToInt (const String string)
+{
+    if (string->size == 0)
+    {
+        return 0;
+    }
+
+    Int result = 0;
+    UInt multiplier = 1;
+
+    for (Int i = string->size - 1; i >= 0; i--)
+    {
+        if ((string->data[i] >= '0') && (string->data[i] <= '9'))
+        {
+            result += (string->data[i] - '0') * multiplier;
+
+            multiplier *= 10;
+        }
+        else if (string->data[i] == '-')
+        {
+            result *= -1;
+
+            break;
+        }
+    }
+
+    return result;
+}
