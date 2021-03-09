@@ -4,7 +4,8 @@ on: ["push", "pull_request"]
 
 jobs:
   building:
-    name: Buildingruns-on: ${{ matrix.os }}
+    name: Building
+    runs-on: ${{ matrix.os }}
 
     continue-on-error: ${{ matrix.experimental }}
 
