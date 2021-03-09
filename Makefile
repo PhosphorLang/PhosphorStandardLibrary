@@ -60,8 +60,6 @@ clean:
 $(ASSEMBLY_FILES): $(C_SOURCE_FILES)
 #	# Compile C to Assembly:
 	gcc $(GCC_FLAGS) -S "$<" -o "$@"
-#	# Remove the last line from the Assembly, which contains an unwanted section:
-	sed -i '$$d' "$@"
 
 # C Assembly to C objects:
 $(OBJECT_FILES): $(ASSEMBLY_FILES)
