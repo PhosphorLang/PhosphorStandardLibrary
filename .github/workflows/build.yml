@@ -4,8 +4,18 @@ on: ["push", "pull_request"]
 
 jobs:
   building:
-    name: Building
-    runs-on: ubuntu-latest
+    name: Buildingruns-on: ${{ matrix.os }}
+
+    continue-on-error: ${{ matrix.experimental }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04]
+        experimental: [false]
+        include:
+          - os: ubuntu-20.04
+            experimental: true
 
     steps:
       - name: Clone repository
