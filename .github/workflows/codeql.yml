@@ -1,0 +1,30 @@
+name: "CodeQL"
+
+on:
+  push:
+  pull_request:
+  schedule:
+  - cron: '25 23 * * 0'
+
+jobs:
+  analyse:
+    name: Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt-get -yqq install nasm gcc binutils make
+
+    - name: Make
+      run: make
+
+    - name: Initialise CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: 'cpp'
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
