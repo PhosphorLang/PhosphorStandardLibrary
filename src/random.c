@@ -15,12 +15,12 @@ void randomise ()
                             : "rcx", "r11");
 
     // TODO: Check return value.
-    // TODO: Should we use the unblocking method?
 }
 
 Int getRandom (Int range)
 {
     seed = (seed * 1103515245 + 12345) % range;
+    // TODO: Is this correct? Shouldn't we only apply the range onto the result and not the seed calculation?
 
     return seed;
 }
