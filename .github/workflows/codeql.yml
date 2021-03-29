@@ -23,8 +23,8 @@ jobs:
       with:
         languages: 'cpp'
 
-    - name: Make
-      run: make
+    - name: Build
+      run: ./build.sh
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1

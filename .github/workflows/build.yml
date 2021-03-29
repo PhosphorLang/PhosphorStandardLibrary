@@ -25,5 +25,5 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get -yqq install nasm gcc binutils make
 
-      - name: Make
-        run: make
+      - name: Build
+        run: ./build.sh
