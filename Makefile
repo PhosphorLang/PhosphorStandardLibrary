@@ -3,7 +3,8 @@ TEMPORY_DIRECTORY := tmp
 OBJECT_DIRECTORY := obj
 BINARY_DIRECTORY := bin
 
-GCC_FLAGS := -fno-stack-protector \
+GCC_FLAGS := -nostdinc \
+			 -fno-stack-protector \
 			 -fdata-sections \
 			 -ffunction-sections \
 			 -fno-builtin \
