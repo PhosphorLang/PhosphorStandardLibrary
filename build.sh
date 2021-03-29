@@ -9,7 +9,7 @@ readonly OBJECT_DIRECTORY="obj"
 readonly BINARY_DIRECTORY="bin"
 
 # Parameters:
-target="$1"
+target="${1--h}"
 
 # Functions:
 
@@ -97,7 +97,7 @@ case $target in
     linuxAmd64)
         targetLinuxAmd64
         ;;
-    -h|--help|help*)
+    -h|--help|help|*)
         echo "Allowed targets: clean, all, limuxAmd64"
         ;;
 esac
