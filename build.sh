@@ -71,6 +71,37 @@ function targetLinuxAmd64
     postBuild "linuxArm64"
 }
 
+function targetAvr
+{
+    targetSubdirectory="avr"
+
+    prepare "$targetSubdirectory"
+
+    sourceDirectory="$SOURCE_DIRECTORY/$targetSubdirectory"
+
+    objectFiles=()
+
+    # Compile Assembler files:
+    for sourceFile in $sourceDirectory/*.asm; do
+        baseFileName=$(basename "$sourceFile" .asm)
+        outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.o"
+
+        objectFiles+=("$outputFile")
+
+        avr-as \
+            -mmcu=avr25 \
+            --mlink-relax \
+            -o "$outputFile" "$sourceFile"
+    done
+
+    targetFile="$BINARY_DIRECTORY/$targetSubdirectory/standardLibrary.a"
+
+    # Pack the object files into the library:
+    ar crs "$targetFile" ${objectFiles[@]}
+
+    postBuild "avr"
+}
+
 function prepare
 {
     targetSubdirectory="$1"
@@ -92,12 +123,16 @@ case $target in
         clean
         ;;
     all)
+        targetAvr
         targetLinuxAmd64
+        ;;
+    avr)
+        targetAvr
         ;;
     linuxAmd64)
         targetLinuxAmd64
         ;;
     -h|--help|help|*)
-        echo "Allowed targets: clean, all, limuxAmd64"
+        echo "Allowed targets: clean, all, avr, limuxAmd64"
         ;;
 esac
