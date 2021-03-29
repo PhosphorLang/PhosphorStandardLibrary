@@ -24,7 +24,7 @@ jobs:
         languages: 'cpp'
 
     - name: Build
-      run: ./build.sh
+      run: bash build.sh
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
