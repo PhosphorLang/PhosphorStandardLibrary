@@ -15,8 +15,8 @@ target="$1"
 
 function clean
 {
-    rm -rf "$OBJECT_DIRECTORY/*"
-    rm -rf "$BINARY_DIRECTORY/*"
+    rm -rf "$OBJECT_DIRECTORY"
+    rm -rf "$BINARY_DIRECTORY"
 
     echo "Cleaned up."
 }
