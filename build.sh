@@ -24,6 +24,7 @@ function clean
 
 function targetLinuxAmd64
 {
+    targetName = "linuxArm64"
     targetSubdirectory="amd64/linux"
 
     prepare "$targetSubdirectory"
@@ -64,16 +65,17 @@ function targetLinuxAmd64
         nasm -a -f elf64 -o "$outputFile" "$sourceFile"
     done
 
-    targetFile="$BINARY_DIRECTORY/$targetSubdirectory/standardLibrary.a"
+    targetFile="$BINARY_DIRECTORY/standardLibrary_$targetName.a"
 
     # Pack the object files into the library:
     ar crs "$targetFile" ${objectFiles[@]}
 
-    postBuild "linuxArm64"
+    postBuild "$targetName"
 }
 
 function targetAvr
 {
+    targetName="avr"
     targetSubdirectory="avr"
 
     prepare "$targetSubdirectory"
@@ -95,12 +97,12 @@ function targetAvr
             -o "$outputFile" "$sourceFile"
     done
 
-    targetFile="$BINARY_DIRECTORY/$targetSubdirectory/standardLibrary.a"
+    targetFile="$BINARY_DIRECTORY/standardLibrary_$targetName.a"
 
     # Pack the object files into the library:
     ar crs "$targetFile" ${objectFiles[@]}
 
-    postBuild "avr"
+    postBuild "$targetName"
 }
 
 function prepare
@@ -108,7 +110,7 @@ function prepare
     targetSubdirectory="$1"
 
     mkdir -p "$OBJECT_DIRECTORY/$targetSubdirectory"
-	mkdir -p "$BINARY_DIRECTORY/$targetSubdirectory"
+	mkdir -p "$BINARY_DIRECTORY"
 }
 
 function postBuild
