@@ -5,12 +5,9 @@ set -euo pipefail
 
 # Constant definitions:
 readonly SOURCE_DIRECTORY="src"
-readonly PLATFORM_SOURCE_DIRECTORY="$SOURCE_DIRECTORY/platform"
+readonly PLATFORM_SOURCE_DIRECTORY="$SOURCE_DIRECTORY/platforms"
 readonly OBJECT_DIRECTORY="obj"
 readonly BINARY_DIRECTORY="bin"
-
-# Parameters:
-target="${1--h}"
 
 # Functions:
 
@@ -24,116 +21,135 @@ function clean
 
 function targetLinuxAmd64
 {
-    targetName = "linuxArm64"
-    targetSubdirectory="amd64/linux"
+    local targetName="linuxArm64"
+    local targetSubdirectory="amd64/linux"
 
     prepare "$targetSubdirectory"
 
-    sourceDirectory="$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"
+    local objectFiles=()
 
-    objectFiles=()
+    local commandGcc=(
+        'gcc'
+        '-nostdinc'
+        '-fno-stack-protector'
+        '-fdata-sections'
+        '-ffunction-sections'
+        '-fno-builtin'
+        '-fno-asynchronous-unwind-tables'
+        '-fno-ident'
+        '-finhibit-size-directive'
+        '-masm=intel'
+        '-O1'
+        '-c'
+        '-o'
+    )
 
-    # Compile C files:
-    for sourceFile in $sourceDirectory/*.c; do
-        baseFileName=$(basename "$sourceFile" .c)
-        outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.o"
+    compileSubdirectory "$targetSubdirectory" "c" objectFiles "${commandGcc[@]}"
 
-        objectFiles+=("$outputFile")
+    local commandNasm=(
+        'nasm'
+        '-a'
+        '-f elf64'
+        '-o'
+    )
 
-        gcc \
-            -nostdinc \
-            -fno-stack-protector \
-            -fdata-sections \
-            -ffunction-sections \
-            -fno-builtin \
-            -fno-asynchronous-unwind-tables \
-            -fno-ident \
-            -finhibit-size-directive \
-            -masm=intel \
-            -O1 \
-            -c "$sourceFile" -o "$outputFile"
+    compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${commandNasm[@]}"
 
-    done
-
-    # Compile Assembler files:
-    for sourceFile in $sourceDirectory/*.asm; do
-        baseFileName=$(basename "$sourceFile" .asm)
-        outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.o"
-
-        objectFiles+=("$outputFile")
-
-        nasm -a -f elf64 -o "$outputFile" "$sourceFile"
-    done
-
-    targetFile="$BINARY_DIRECTORY/standardLibrary_$targetName.a"
-
-    # Pack the object files into the library:
-    ar crs "$targetFile" ${objectFiles[@]}
-
-    postBuild "$targetName"
+    packLibrary "$targetName" "${objectFiles[@]}"
 }
 
 function targetAvr
 {
-    targetName="avr"
-    targetSubdirectory="avr"
+    local targetName="avr"
+    local targetSubdirectory="avr"
 
     prepare "$targetSubdirectory"
 
-    sourceDirectory="$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"
+    local objectFiles=()
 
-    objectFiles=()
+    local command=(
+        'avr-as'
+        '-mmcu=avr25'
+        '--mlink-relax'
+        '-o'
+    )
 
-    # Compile Assembler files:
-    for sourceFile in $sourceDirectory/*.asm; do
-        baseFileName=$(basename "$sourceFile" .asm)
-        outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.o"
+    compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${command[@]}"
 
-        objectFiles+=("$outputFile")
+    packLibrary "$targetName" "${objectFiles[@]}"
+}
 
-        avr-as \
-            -mmcu=avr25 \
-            --mlink-relax \
-            -o "$outputFile" "$sourceFile"
+# Compile the contents of a subdirectory with the given compile command.
+function compileSubdirectory
+{
+    local targetSubdirectory=$1
+    local fileExtension=$2
+    local -n outputFiles=$3
+    shift 3
+    local command=("${@}")
+
+    local sourceDirectory="$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"
+
+    for sourceFile in $sourceDirectory/*.$fileExtension ; do
+        local baseFileName=$(basename "$sourceFile" .$fileExtension)
+        local outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.o"
+
+        outputFiles+=("$outputFile")
+
+        "${command[@]}" "$outputFile" "$sourceFile"
     done
+}
 
-    targetFile="$BINARY_DIRECTORY/standardLibrary_$targetName.a"
+# Pack the given object files into a linkable library.
+function packLibrary
+{
+    local targetName=$1
+    shift 1
+    local objectFiles=("${@}")
 
-    # Pack the object files into the library:
+    local targetFile="$BINARY_DIRECTORY/standardLibrary_$targetName.a"
+
     ar crs "$targetFile" ${objectFiles[@]}
-
-    postBuild "$targetName"
 }
 
 function prepare
 {
-    targetSubdirectory="$1"
+    local targetSubdirectory="$1"
 
     mkdir -p "$OBJECT_DIRECTORY/$targetSubdirectory"
 	mkdir -p "$BINARY_DIRECTORY"
 }
 
-function postBuild
+function build
 {
-    buildTarget=$1
+    local buildTarget=$1
+
+    case $buildTarget in
+        all)
+            targetAvr
+            targetLinuxAmd64
+            ;;
+        avr)
+            targetAvr
+            ;;
+        linuxAmd64)
+            targetLinuxAmd64
+            ;;
+    esac
 
     echo "Build completed for target $buildTarget."
 }
+
+# Parameters:
+target="${1--h}"
 
 # Target processing:
 case $target in
     clean)
         clean
         ;;
-    all)
-        targetAvr
-        targetLinuxAmd64
-        ;;
-    avr)
-        targetAvr
-        ;;
-    linuxAmd64)
-        targetLinuxAmd64
+    all|avr|linuxAmd64)
+        build $target
         ;;
     -h|--help|help|*)
         echo "Allowed targets: clean, all, avr, limuxAmd64"
