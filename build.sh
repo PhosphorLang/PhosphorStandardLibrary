@@ -5,6 +5,7 @@ set -euo pipefail
 
 # Constant definitions:
 readonly SOURCE_DIRECTORY="src"
+readonly PLATFORM_SOURCE_DIRECTORY="$SOURCE_DIRECTORY/platform"
 readonly OBJECT_DIRECTORY="obj"
 readonly BINARY_DIRECTORY="bin"
 
@@ -27,7 +28,7 @@ function targetLinuxAmd64
 
     prepare "$targetSubdirectory"
 
-    sourceDirectory="$SOURCE_DIRECTORY/$targetSubdirectory"
+    sourceDirectory="$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"
 
     objectFiles=()
 
@@ -77,7 +78,7 @@ function targetAvr
 
     prepare "$targetSubdirectory"
 
-    sourceDirectory="$SOURCE_DIRECTORY/$targetSubdirectory"
+    sourceDirectory="$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"
 
     objectFiles=()
 
