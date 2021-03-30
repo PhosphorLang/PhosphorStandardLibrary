@@ -63,7 +63,10 @@ String readLine ()
             copy(&newResult[resultSize], buffer, bytesRead);
 
             // Don't forget: Free the old result!
-            free(result, resultSize);
+            if (result != null)
+            {
+                free(result, resultSize);
+            }
 
             result = newResult;
             resultSize = newSize;
