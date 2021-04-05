@@ -31,7 +31,7 @@ typedef enum {
 
 #define null 0
 
-#if defined(__LP64__) || defined(_LP64)
+#if defined(__x86_64__) || defined(__x86_64) || defined(__LP64__) || defined(_LP64)
 
     /** Architecture (word size) dependent signed integer */
     typedef Int64 Int;
