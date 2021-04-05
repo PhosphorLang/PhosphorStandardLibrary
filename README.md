@@ -1,4 +1,4 @@
-[![Build](https://github.com/PhosphorLang/StandardLibrary/workflows/Build/badge.svg)](https://github.com/PhosphorLang/StandardLibrary/actions)
+[![Build](https://github.com/PhosphorLang/PhosphorStandardLibrary/workflows/Build/badge.svg)](https://github.com/PhosphorLang/PhosphorStandardLibrary/actions)
 
 # **The Phosphor Standard Library**
 
