@@ -220,6 +220,6 @@ case $target in
         build $target
         ;;
     -h|--help|help|*)
-        echo "Allowed targets: clean, all, avr, limuxAmd64"
+        echo "Allowed targets: clean, all, avr, amd64, limuxAmd64"
         ;;
 esac
