@@ -34,11 +34,11 @@ typedef enum {
 #if defined(__LP64__) || defined(_LP64)
 
     /** Architecture (word size) dependent signed integer */
-    typedef signed long long Int;
+    typedef Int64 Int;
     /** Architecture (word size) dependent unsigned integer */
-    typedef unsigned long long UInt;
+    typedef UInt64 UInt;
     /** Architecture (word size) dependent floating point number */
-    typedef double Float;
+    typedef Float64 Float;
 
 #else
 
