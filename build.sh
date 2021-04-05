@@ -19,6 +19,51 @@ function clean
     echo "Cleaned up."
 }
 
+function targetAmd64
+{
+    local targetName="amd64"
+    local targetSubdirectory="amd64"
+
+    prepare "$targetSubdirectory"
+
+    local objectFiles=()
+
+    local commandGcc=(
+        'gcc'
+        '-nostdinc'
+        '-fno-stack-protector'
+        '-fdata-sections'
+        '-ffunction-sections'
+        '-fno-builtin'
+        '-fno-asynchronous-unwind-tables'
+        '-fno-ident'
+        '-finhibit-size-directive'
+        '-masm=intel'
+        '-O1'
+        '-c'
+        '-o'
+    )
+
+    # Common files
+    compileSubdirectory "common" "c" objectFiles "${commandGcc[@]}"
+    # Amd64 files
+    compileSubdirectory "$targetSubdirectory" "c" objectFiles "${commandGcc[@]}"
+
+    local commandNasm=(
+        'nasm'
+        '-a'
+        '-f elf64'
+        '-o'
+    )
+
+    # Common files
+    compileSubdirectory "common" "asm" objectFiles "${commandNasm[@]}"
+    # Amd64 files
+    compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${commandNasm[@]}"
+
+    packLibrary "$targetName" "${objectFiles[@]}"
+}
+
 function targetLinuxAmd64
 {
     local targetName="linuxArm64"
@@ -151,6 +196,9 @@ function build
         avr)
             targetAvr
             ;;
+        amd64)
+            targetAmd64
+            ;;
         linuxAmd64)
             targetLinuxAmd64
             ;;
@@ -167,7 +215,7 @@ case $target in
     clean)
         clean
         ;;
-    all|avr|linuxAmd64)
+    all|avr|amd64|linuxAmd64)
         build $target
         ;;
     -h|--help|help|*)
