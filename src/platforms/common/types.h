@@ -40,6 +40,15 @@ typedef enum {
     /** Architecture (word size) dependent floating point number */
     typedef Float64 Float;
 
+#elif defined(__AVR)
+
+    /** Architecture (word size) dependent signed integer */
+    typedef Int8 Int;
+    /** Architecture (word size) dependent unsigned integer */
+    typedef UInt8 UInt;
+    /** Architecture (word size) dependent floating point number */
+    typedef Float32 Float;
+
 #else
 
     #error "Architecture is not supported."
