@@ -5,9 +5,9 @@ set -euo pipefail
 
 # Constant definitions:
 readonly SOURCE_DIRECTORY="src"
-readonly PLATFORM_SOURCE_DIRECTORY="$SOURCE_DIRECTORY/platforms"
 readonly OBJECT_DIRECTORY="obj"
 readonly BINARY_DIRECTORY="bin"
+readonly PLATFORM_SOURCE_DIRECTORY="$SOURCE_DIRECTORY/platforms"
 
 # Functions:
 
@@ -44,6 +44,11 @@ function targetLinuxAmd64
         '-o'
     )
 
+    # Common files
+    compileSubdirectory "common" "c" objectFiles "${commandGcc[@]}"
+    # Amd64 files
+    compileSubdirectory "amd64" "c" objectFiles "${commandGcc[@]}"
+    # Linux Amd64 files
     compileSubdirectory "$targetSubdirectory" "c" objectFiles "${commandGcc[@]}"
 
     local commandNasm=(
@@ -53,6 +58,11 @@ function targetLinuxAmd64
         '-o'
     )
 
+    # Common files
+    compileSubdirectory "common" "asm" objectFiles "${commandNasm[@]}"
+    # Amd64 files
+    compileSubdirectory "amd64" "asm" objectFiles "${commandNasm[@]}"
+    # Linux Amd64 files
     compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${commandNasm[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
@@ -74,6 +84,9 @@ function targetAvr
         '-o'
     )
 
+    # Common files
+    compileSubdirectory "common" "asm" objectFiles "${command[@]}"
+    # Avr files
     compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${command[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
@@ -91,6 +104,11 @@ function compileSubdirectory
     local sourceDirectory="$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"
 
     for sourceFile in $sourceDirectory/*.$fileExtension ; do
+        # Check if this is really a file and otherwise skip the loop:
+        if ! [ -f $sourceFile ]; then
+            continue
+        fi
+
         local baseFileName=$(basename "$sourceFile" .$fileExtension)
         local outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.o"
 
@@ -116,6 +134,7 @@ function prepare
 {
     local targetSubdirectory="$1"
 
+    mkdir -p "$OBJECT_DIRECTORY/common"
     mkdir -p "$OBJECT_DIRECTORY/$targetSubdirectory"
 	mkdir -p "$BINARY_DIRECTORY"
 }

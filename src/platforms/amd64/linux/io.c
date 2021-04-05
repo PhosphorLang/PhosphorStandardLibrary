@@ -1,6 +1,6 @@
 #include "memory.h"
 #include "string.h"
-#include "types.h"
+#include "../../common/types.h"
 
 /**
  * Writes a string to the standard output, followed by a line break.

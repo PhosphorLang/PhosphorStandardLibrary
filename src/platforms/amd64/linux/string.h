@@ -1,6 +1,6 @@
 #pragma once
 
-#include "types.h"
+#include "../../common/types.h"
 
 /** A string value contains the size of the data as an integer and the data itself as an array. */
 typedef struct

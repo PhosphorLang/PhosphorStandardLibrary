@@ -1,6 +1,6 @@
 #include "memory.h"
 #include "string.h"
-#include "types.h"
+#include "../../common/types.h"
 
 Bool stringsAreEqual (const String string1, const String string2)
 {
