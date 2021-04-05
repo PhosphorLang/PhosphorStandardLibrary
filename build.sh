@@ -66,7 +66,7 @@ function targetAmd64
 
 function targetLinuxAmd64
 {
-    local targetName="linuxArm64"
+    local targetName="linuxAmd64"
     local targetSubdirectory="amd64/linux"
 
     prepare "$targetSubdirectory"
