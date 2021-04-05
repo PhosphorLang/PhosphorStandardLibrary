@@ -32,4 +32,4 @@ You can get an overview over all possible targets with help:
 ./build.sh --help
 ```
 
-After that, the standard library file `standardLibrary.a` can be found in the `bin` folder.
+After that, the standard library file `standardLibrary_<target>.a` can be found in the `bin` folder.
