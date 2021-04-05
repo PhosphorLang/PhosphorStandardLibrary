@@ -1,6 +1,6 @@
 #include "../../common/types.h"
 
-UInt seed = 0;
+static UInt seed = 0;
 
 void randomise ()
 {
