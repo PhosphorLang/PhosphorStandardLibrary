@@ -9,7 +9,7 @@ The standard library for the Phosphor programming language.
 You need the following present on your system to compile the standard library:
 
 - [NASM](https://nasm.us/) >= 2.13
-- [gcc](https://gcc.gnu.org/) >= 8.3
+- [gcc](https://gcc.gnu.org/) >= 9.3
 - [GNU ar](https://www.gnu.org/software/binutils/) >= 2.30
 
 ## **Compilation**
