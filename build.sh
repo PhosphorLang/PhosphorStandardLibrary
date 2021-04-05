@@ -191,6 +191,7 @@ function build
     case $buildTarget in
         all)
             targetAvr
+            targetAmd64
             targetLinuxAmd64
             ;;
         avr)
