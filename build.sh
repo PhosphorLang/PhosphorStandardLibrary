@@ -208,8 +208,8 @@ function build
     echo "Build completed for target $buildTarget."
 }
 
-# Parameters:
-target="${1--h}"
+# Parameters (when no given, default to "all"):
+target="${1-all}"
 
 # Target processing:
 case $target in
