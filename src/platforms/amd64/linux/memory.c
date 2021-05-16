@@ -12,7 +12,7 @@ void* alloc (UInt size)
     register UInt flags asm("r10") = 0x22; // 0x22 = MAP_PRIVATE|MAP_ANONYMOUS
     register Int fileDescriptor asm("r8") = -1;
     register UInt offset asm("r9") = 0;
-    Int syscode = 9; // Syscall ID for mmap
+    UInt syscode = 9; // Syscall ID for mmap
     void* result;
 
     asm volatile ("syscall" : "=a" (result)
