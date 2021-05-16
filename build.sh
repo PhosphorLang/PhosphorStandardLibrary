@@ -194,8 +194,13 @@ function copyHeaders
 {
     local targetName="$1"
 
-    # Copy the CONTENTS of the header directory (hence the trailing "/") to the target subdirectory in the bin folder:
-    cp -R "$SOURCE_DIRECTORY/headers/$targetName/." "$BINARY_DIRECTORY/$targetName/headers"
+    local sourceDirectory="$SOURCE_DIRECTORY/headers/$targetName/."
+
+    # We must check if the directory exists because not all targets have header files:
+    if [ -d "$sourceDirectory" ]; then
+        # Copy the CONTENTS of the header directory (hence the trailing "/") to the target subdirectory in the bin folder:
+        cp -R "$SOURCE_DIRECTORY/headers/$targetName/." "$BINARY_DIRECTORY/$targetName/headers"
+    fi
 }
 
 function build
