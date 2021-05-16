@@ -1,2 +1,5 @@
+# Force .ph files to be recognised as Phosphor instead of Perl:
+*.ph linguist-language=Phosphor
+
 # Force .h files to be recognised as C instead of C++:
 *.h linguist-language=C
