@@ -1,2 +1,2 @@
-external function getRandom (range: Int);
+external function getRandom (range: Int): Int;
 external function randomise ();

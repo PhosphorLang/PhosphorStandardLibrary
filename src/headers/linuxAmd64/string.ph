@@ -1,2 +1,2 @@
-external function intToString (integer: Int);
-external function stringToInt (string: String);
+external function intToString (integer: Int): String;
+external function stringToInt (string: String): Int;
