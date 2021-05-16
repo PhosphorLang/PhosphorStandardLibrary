@@ -24,7 +24,7 @@ function targetAmd64
     local targetName="amd64"
     local targetSubdirectory="amd64"
 
-    prepare "$targetSubdirectory"
+    prepare "$targetName" "$targetSubdirectory"
 
     local objectFiles=()
 
@@ -62,6 +62,7 @@ function targetAmd64
     compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${commandNasm[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
+    copyHeaders "$targetName"
 }
 
 function targetLinuxAmd64
@@ -69,7 +70,7 @@ function targetLinuxAmd64
     local targetName="linuxAmd64"
     local targetSubdirectory="amd64/linux"
 
-    prepare "$targetSubdirectory"
+    prepare "$targetName" "$targetSubdirectory"
 
     local objectFiles=()
 
@@ -111,6 +112,7 @@ function targetLinuxAmd64
     compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${commandNasm[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
+    copyHeaders "$targetName"
 }
 
 function targetAvr
@@ -118,7 +120,7 @@ function targetAvr
     local targetName="avr"
     local targetSubdirectory="avr"
 
-    prepare "$targetSubdirectory"
+    prepare "$targetName" "$targetSubdirectory"
 
     local objectFiles=()
 
@@ -135,6 +137,7 @@ function targetAvr
     compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${command[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
+    copyHeaders "$targetName"
 }
 
 # Compile the contents of a subdirectory with the given compile command.
@@ -170,18 +173,29 @@ function packLibrary
     shift 1
     local objectFiles=("${@}")
 
-    local targetFile="$BINARY_DIRECTORY/standardLibrary_$targetName.a"
+    local targetFile="$BINARY_DIRECTORY/$targetName/standardLibrary.a"
 
     ar crs "$targetFile" ${objectFiles[@]}
 }
 
 function prepare
 {
-    local targetSubdirectory="$1"
+    local targetName="$1"
+    local targetSubdirectory="$2"
 
     mkdir -p "$OBJECT_DIRECTORY/common"
     mkdir -p "$OBJECT_DIRECTORY/$targetSubdirectory"
-	mkdir -p "$BINARY_DIRECTORY"
+	mkdir -p "$BINARY_DIRECTORY/$targetName/headers"
+
+    # TODO: Should we clean a target before compiling it again to prevent old files not being deleted?
+}
+
+function copyHeaders
+{
+    local targetName="$1"
+
+    # Copy the CONTENTS of the header directory (hence the trailing "/") to the target subdirectory in the bin folder:
+    cp -R "$SOURCE_DIRECTORY/headers/$targetName/." "$BINARY_DIRECTORY/$targetName/headers"
 }
 
 function build
