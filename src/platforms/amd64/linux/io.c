@@ -3,10 +3,10 @@
 #include "../../common/types.h"
 
 /**
- * Writes a string to the standard output, followed by a line break.
+ * Writes a string to the standard output.
  * @param text The string to write.
  */
-void writeLine (const String text)
+void write (const String text)
 {
     Int fileDescriptor = 1; // File descriptor ID for stdout
     UInt syscode = 1; // Syscall ID for writing
@@ -18,14 +18,24 @@ void writeLine (const String text)
                             : "rcx", "r11");
 
     // TODO: Check if result is an error (-1) or less than the text size.
+}
 
-    // Print line break:
-    asm volatile ("syscall" : "=a" (result)
-                            : "d" (1), "S" ("\n"), "D" (fileDescriptor), "a" (syscode)
-                            : "rcx", "r11");
+/**
+ * Writes a string to the standard output, followed by a line break.
+ * @param text The string to write.
+ */
+void writeLine (const String text)
+{
+    UInt8* lineBreakLiteralChar = &((UInt8){'\n'});
 
-    // TODO: Check result.
-    // TODO: Replace hardcoded line break with a system dependent constant.
+    String lineBreak = createString(lineBreakLiteralChar, 1);
+
+    write(text);
+    write(lineBreak);
+
+    free(lineBreak, sizeof (StringValue) + 1);
+
+    // TODO: Replace the hard coded line break with a system dependent constant.
 }
 
 /**
