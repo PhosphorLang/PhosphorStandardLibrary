@@ -27,7 +27,7 @@ void* alloc (UInt size)
  * @param address The pointer to the memory to free.
  * @param size The size of the memory block.
  */
-void free (void* address, UInt size)
+void free (const void* address, UInt size)
 {
     UInt syscode = 11; // Syscall ID for munmap
 
