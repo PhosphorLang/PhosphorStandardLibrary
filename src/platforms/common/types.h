@@ -25,8 +25,8 @@ typedef double Float64;
 
 /** 1 Byte Boolean */
 typedef enum {
-    false = 0,
-    true = 1,
+    false = (Int8)0,
+    true = (Int8)-1,
 } __attribute__((__packed__)) Bool;
 
 #define null 0
