@@ -12,11 +12,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04]
+        os: [ubuntu-20.04]
         experimental: [false]
         include:
-          - os: ubuntu-20.04
-            experimental: true
           - os: ubuntu-18.04
             experimental: true
 
