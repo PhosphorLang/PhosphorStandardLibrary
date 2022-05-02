@@ -1,6 +1,6 @@
 #include "../../common/types.h"
 
-static UInt seed = 0;
+static Int seed = 0;
 
 void randomise ()
 {
@@ -8,16 +8,26 @@ void randomise ()
     UInt byteCount = sizeof(Int);
     UInt flags = 0;
 
+    Int newSeed;
     Int result;
 
     asm volatile ("syscall" : "=a" (result)
-                            : "D" (&seed), "S" (byteCount), "d" (flags),  "a" (syscode)
+                            : "D" (&newSeed), "S" (byteCount), "d" (flags),  "a" (syscode)
                             : "rcx", "r11");
+
+    if (newSeed < 0)
+    {
+        seed = -newSeed;
+    }
+    else
+    {
+        seed = newSeed;
+    }
 
     // TODO: Check return value.
 }
 
-Int getRandom (Int range)
+Int getRandom (UInt range)
 {
     seed = (seed * 1103515245 + 12345) % range;
     // TODO: Is this correct? Shouldn't we only apply the range onto the result and not the seed calculation?
