@@ -26,7 +26,7 @@ void write (const String text)
  */
 void writeLine (const String text)
 {
-    UInt8* lineBreakLiteralChar = &((UInt8){'\n'});
+    UInt8* lineBreakLiteralChar = { "\n" };
 
     String lineBreak = createString(lineBreakLiteralChar, 1);
 
