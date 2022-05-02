@@ -243,6 +243,11 @@ case $target in
         build $target
         ;;
     -h|--help|help|*)
-        echo "Allowed targets: clean, all, avr, amd64, limuxAmd64, stable"
+        echo "Platform targets:"
+        echo "  avr, amd64, limuxAmd64"
+        echo "Special targets:"
+        echo "  clean - Clean the build directory."
+        echo "  all - Build all targets."
+        echo "  stable - Build the targets that are considered stable."
         ;;
 esac
