@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'version/**'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: sudo apt-get -yqq install zip nasm gcc binutils
+
+      - name: Build
+        run: bash build.sh stable
+
+      - name: Pack build
+        run: |
+          mv bin phosphorStandardLibrary
+          zip phosphorStandardLibrary.zip phosphorStandardLibrary
+
+      - name: Get release name
+        id: vars
+        run: echo "RELEASE_NAME=Version ${GITHUB_REF#refs/tags/version/}" >> $GITHUB_ENV
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'phosphorStandardLibrary.zip'
+          name: ${{ env.RELEASE_NAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
