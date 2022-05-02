@@ -23,7 +23,7 @@ jobs:
       - name: Pack build
         run: |
           mv bin phosphorStandardLibrary
-          zip phosphorStandardLibrary.zip phosphorStandardLibrary
+          zip -r phosphorStandardLibrary.zip phosphorStandardLibrary
 
       - name: Get release name
         id: vars
