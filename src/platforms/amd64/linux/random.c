@@ -29,8 +29,9 @@ void randomise ()
 
 Int getRandom (UInt range)
 {
-    seed = (seed * 1103515245 + 12345) % range;
-    // TODO: Is this correct? Shouldn't we only apply the range onto the result and not the seed calculation?
+    seed = (seed * 1103515245 + 12345);
 
-    return seed;
+    Int result = seed % range;
+
+    return result;
 }
