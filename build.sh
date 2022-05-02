@@ -222,23 +222,27 @@ function build
         linuxAmd64)
             targetLinuxAmd64
             ;;
+        stable)
+            targetAmd64
+            targetLinuxAmd64
+            ;;
     esac
 
     echo "Build completed for target $buildTarget."
 }
 
-# Parameters (when no given, default to "all"):
-target="${1-all}"
+# Parameters (when no given, default to "stable"):
+target="${1-stable}"
 
 # Target processing:
 case $target in
     clean)
         clean
         ;;
-    all|avr|amd64|linuxAmd64)
+    all|avr|amd64|linuxAmd64|stable)
         build $target
         ;;
     -h|--help|help|*)
-        echo "Allowed targets: clean, all, avr, amd64, limuxAmd64"
+        echo "Allowed targets: clean, all, avr, amd64, limuxAmd64, stable"
         ;;
 esac
