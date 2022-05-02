@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: sudo apt-get -yqq install zip nasm gcc binutils
+        run: sudo apt-get -yqq install nasm gcc binutils
 
       - name: Build
         run: bash build.sh stable
@@ -23,7 +23,7 @@ jobs:
       - name: Pack build
         run: |
           mv bin phosphorStandardLibrary
-          zip -9 -r phosphorStandardLibrary.zip phosphorStandardLibrary
+          tar -czf phosphorStandardLibrary.tgz phosphorStandardLibrary
 
       - name: Get release name
         id: vars
@@ -32,7 +32,7 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          files: 'phosphorStandardLibrary.zip'
+          files: 'phosphorStandardLibrary.tgz'
           name: ${{ env.RELEASE_NAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
