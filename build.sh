@@ -45,9 +45,9 @@ function targetAmd64
     )
 
     # Common files
-    compileSubdirectory "common" "c" objectFiles "${commandGcc[@]}"
+    compileSubdirectory "common" "c" "o" objectFiles "${commandGcc[@]}"
     # Amd64 files
-    compileSubdirectory "$targetSubdirectory" "c" objectFiles "${commandGcc[@]}"
+    compileSubdirectory "$targetSubdirectory" "c" "o" objectFiles "${commandGcc[@]}"
 
     local commandNasm=(
         'nasm'
@@ -57,9 +57,9 @@ function targetAmd64
     )
 
     # Common files
-    compileSubdirectory "common" "asm" objectFiles "${commandNasm[@]}"
+    compileSubdirectory "common" "asm" "o" objectFiles "${commandNasm[@]}"
     # Amd64 files
-    compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${commandNasm[@]}"
+    compileSubdirectory "$targetSubdirectory" "asm" "o" objectFiles "${commandNasm[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
     copyHeaders "$targetName"
@@ -91,11 +91,11 @@ function targetLinuxAmd64
     )
 
     # Common files
-    compileSubdirectory "common" "c" objectFiles "${commandGcc[@]}"
+    compileSubdirectory "common" "c" "o" objectFiles "${commandGcc[@]}"
     # Amd64 files
-    compileSubdirectory "amd64" "c" objectFiles "${commandGcc[@]}"
+    compileSubdirectory "amd64" "c" "o" objectFiles "${commandGcc[@]}"
     # Linux Amd64 files
-    compileSubdirectory "$targetSubdirectory" "c" objectFiles "${commandGcc[@]}"
+    compileSubdirectory "$targetSubdirectory" "c" "o" objectFiles "${commandGcc[@]}"
 
     local commandNasm=(
         'nasm'
@@ -105,11 +105,11 @@ function targetLinuxAmd64
     )
 
     # Common files
-    compileSubdirectory "common" "asm" objectFiles "${commandNasm[@]}"
+    compileSubdirectory "common" "asm" "o" objectFiles "${commandNasm[@]}"
     # Amd64 files
-    compileSubdirectory "amd64" "asm" objectFiles "${commandNasm[@]}"
+    compileSubdirectory "amd64" "asm" "o" objectFiles "${commandNasm[@]}"
     # Linux Amd64 files
-    compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${commandNasm[@]}"
+    compileSubdirectory "$targetSubdirectory" "asm" "o" objectFiles "${commandNasm[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
     copyHeaders "$targetName"
@@ -132,9 +132,9 @@ function targetAvr
     )
 
     # Common files
-    compileSubdirectory "common" "asm" objectFiles "${command[@]}"
+    compileSubdirectory "common" "asm" "o" objectFiles "${command[@]}"
     # Avr files
-    compileSubdirectory "$targetSubdirectory" "asm" objectFiles "${command[@]}"
+    compileSubdirectory "$targetSubdirectory" "asm" "o" objectFiles "${command[@]}"
 
     packLibrary "$targetName" "${objectFiles[@]}"
     copyHeaders "$targetName"
@@ -144,21 +144,22 @@ function targetAvr
 function compileSubdirectory
 {
     local targetSubdirectory=$1
-    local fileExtension=$2
-    local -n outputFiles=$3
-    shift 3
+    local inputFileExtension=$2
+    local outputFileExtension=$3
+    local -n outputFiles=$4
+    shift 4
     local command=("${@}")
 
     local sourceDirectory="$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"
 
-    for sourceFile in $sourceDirectory/*.$fileExtension ; do
+    for sourceFile in $sourceDirectory/*.$inputFileExtension ; do
         # Check if this is really a file and otherwise skip the loop:
         if ! [ -f $sourceFile ]; then
             continue
         fi
 
-        local baseFileName=$(basename "$sourceFile" .$fileExtension)
-        local outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.o"
+        local baseFileName=$(basename "$sourceFile" .$inputFileExtension)
+        local outputFile="$OBJECT_DIRECTORY/$targetSubdirectory/$baseFileName.$outputFileExtension"
 
         outputFiles+=("$outputFile")
 
