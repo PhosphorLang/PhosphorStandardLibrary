@@ -1,0 +1,23 @@
+$"::standardLibrary::write()":
+    // Reserve stack space:
+    ADD SP, 3, SP
+
+    COPY_BYTE *R0, R1 // Put the value of char into R1.
+    COPY *CURSOR_POINTER, R2 // Get the current cursor pointer value.
+    COPY_BYTE R1, *R2 // Write the char onto the terminal.
+    ADD R2, 1, R2 // Increase the cursor pointer by 1.
+    COPY R2, *CURSOR_POINTER // Write the cursor pointer back.
+
+    // Check if the end of the terminal is reached:
+    COPY TERMINAL_END, R45
+    COMP R2, R45, R2
+    JUMP_LT R2, $end_of_put_char
+    // Reset the cursor to the terminal start:
+    COPY TERMINAL_START, R2
+    COPY R2, *CURSOR_POINTER
+
+    $end_of_put_char:
+    // Stack frame restoration:
+	COPY R0, SP
+	POP R0
+	RETURN
