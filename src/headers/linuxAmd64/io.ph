@@ -1,2 +1,2 @@
-external function readLine (): String;
-external function writeLine (text: String);
+header function readLine (): String;
+header function writeLine (text: String);

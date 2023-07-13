@@ -1,2 +1,2 @@
-external function getRandom (range: Int): Int;
-external function randomise ();
+header function getRandom (range: Int): Int;
+header function randomise ();

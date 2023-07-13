@@ -1,1 +1,1 @@
-external function exit ();
+header function exit ();

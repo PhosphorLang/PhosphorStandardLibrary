@@ -1,1 +1,1 @@
-external function sleep (milliseconds: UInt);
+header function sleep (milliseconds: UInt);
