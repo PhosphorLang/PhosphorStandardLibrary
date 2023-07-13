@@ -115,31 +115,6 @@ function targetLinuxAmd64
     copyHeaders "$targetName"
 }
 
-function targetAvr
-{
-    local targetName="avr"
-    local targetSubdirectory="avr"
-
-    prepare "$targetName" "$targetSubdirectory"
-
-    local objectFiles=()
-
-    local command=(
-        'avr-as'
-        '-mmcu=avr25'
-        '--mlink-relax'
-        '-o'
-    )
-
-    # Common files
-    compileSubdirectory "common" "asm" "o" objectFiles "${command[@]}"
-    # Avr files
-    compileSubdirectory "$targetSubdirectory" "asm" "o" objectFiles "${command[@]}"
-
-    packLibrary "$targetName" "${objectFiles[@]}"
-    copyHeaders "$targetName"
-}
-
 function targetBackseat
 {
     local targetName="backseat"
@@ -235,13 +210,9 @@ function build
 
     case $buildTarget in
         all)
-            targetAvr
             targetAmd64
             targetBackseat
             targetLinuxAmd64
-            ;;
-        avr)
-            targetAvr
             ;;
         backseat)
             targetBackseat
@@ -269,12 +240,12 @@ case $target in
     clean)
         clean
         ;;
-    all|avr|amd64|backseat|linuxAmd64|stable)
+    all|amd64|backseat|linuxAmd64|stable)
         build $target
         ;;
     -h|--help|help|*)
         echo "Platform targets:"
-        echo "  avr, amd64, backseat, limuxAmd64"
+        echo "  amd64, backseat, limuxAmd64"
         echo "Special targets:"
         echo "  clean - Clean the build directory."
         echo "  all - Build all targets."
