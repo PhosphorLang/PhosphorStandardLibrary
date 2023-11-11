@@ -11,6 +11,7 @@ struct SleepTimeSpec
  * Waits for the given amount of milliseconds.
  * @param milliseconds The number of milliseconds to wait for.
  */
+void sleep (UInt milliseconds) asm ("Standard.Sleep.sleep");
 void sleep (UInt milliseconds)
 {
     struct SleepTimeSpec sleepTimeSpec = {

@@ -2,6 +2,7 @@
 
 static Int seed = 0;
 
+void randomise () asm ("Standard.Random.randomise");
 void randomise ()
 {
     UInt syscode = 318; // Syscall ID for getrandom
@@ -27,7 +28,8 @@ void randomise ()
     // TODO: Check return value.
 }
 
-Int getRandom (UInt range)
+Int getRandom (Int range) asm ("Standard.Random.getRandom");
+Int getRandom (Int range)
 {
     seed = (seed * 1103515245 + 12345);
 

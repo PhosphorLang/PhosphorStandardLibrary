@@ -6,6 +6,7 @@
  * Writes a string to the standard output.
  * @param text The string to write.
  */
+void write (const String text) asm ("Standard.Io.write");
 void write (const String text)
 {
     Int fileDescriptor = 1; // File descriptor ID for stdout
@@ -24,6 +25,7 @@ void write (const String text)
  * Writes a string to the standard output, followed by a line break.
  * @param text The string to write.
  */
+void writeLine (const String text) asm ("Standard.Io.writeLine");
 void writeLine (const String text)
 {
     UInt8* lineBreakLiteralChar = { "\n" };
@@ -42,6 +44,7 @@ void writeLine (const String text)
  * Reads a line from the standard input.
  * @return The string that has been read in. Does not include the line break.
  */
+String readLine () asm ("Standard.Io.readLine");
 String readLine ()
 {
     Int fileDescriptor = 0; // File descriptor ID for stdin
