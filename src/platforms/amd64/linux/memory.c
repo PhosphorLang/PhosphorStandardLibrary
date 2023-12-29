@@ -1,3 +1,4 @@
+#include "syscodes.h"
 #include "../../common/types.h"
 
 /**
@@ -13,7 +14,7 @@ void* allocate (UInt size)
     register UInt flags asm("r10") = 0x22; // 0x22 = MAP_PRIVATE|MAP_ANONYMOUS
     register Int fileDescriptor asm("r8") = -1;
     register UInt offset asm("r9") = 0;
-    UInt syscode = 9; // Syscall ID for mmap
+    UInt syscode = SYSCODE_MEMORY_MAP;
     void* result;
 
     asm volatile ("syscall" : "=a" (result)
@@ -30,7 +31,7 @@ void* allocate (UInt size)
  */
 void free (const void* address, UInt size)
 {
-    UInt syscode = 11; // Syscall ID for munmap
+    UInt syscode = SYSCODE_MEMORY_UNMAP;
 
     Int result;
 

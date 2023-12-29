@@ -1,3 +1,4 @@
+#include "syscodes.h"
 #include "../../common/types.h"
 
 struct SleepTimeSpec
@@ -19,7 +20,7 @@ void sleep (UInt milliseconds)
         .nanoseconds = milliseconds % 1000 * 1000000
     };
 
-    UInt syscode = 35; // Syscall ID for nanosleep
+    UInt syscode = SYSCODE_NANO_SLEEP;
     Int result;
 
     asm volatile ("syscall" : "=a" (result)

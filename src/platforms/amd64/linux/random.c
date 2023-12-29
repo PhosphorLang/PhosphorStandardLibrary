@@ -1,3 +1,4 @@
+#include "syscodes.h"
 #include "../../common/types.h"
 
 static Int seed = 0;
@@ -5,7 +6,7 @@ static Int seed = 0;
 void randomise () asm ("Standard.Random.randomise");
 void randomise ()
 {
-    UInt syscode = 318; // Syscall ID for getrandom
+    UInt syscode = SYSCODE_GET_RANDOM;
     UInt byteCount = sizeof(Int);
     UInt flags = 0;
 

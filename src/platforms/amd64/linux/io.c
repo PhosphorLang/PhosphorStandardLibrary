@@ -1,5 +1,6 @@
 #include "memory.h"
 #include "string.h"
+#include "syscodes.h"
 #include "../../common/types.h"
 
 /**
@@ -10,7 +11,7 @@ void write (const String text) asm ("Standard.Io.write");
 void write (const String text)
 {
     Int fileDescriptor = 1; // File descriptor ID for stdout
-    UInt syscode = 1; // Syscall ID for writing
+    UInt syscode = SYSCODE_WRITE;
 
     Int result;
 
@@ -48,7 +49,7 @@ String readLine () asm ("Standard.Io.readLine");
 String readLine ()
 {
     Int fileDescriptor = 0; // File descriptor ID for stdin
-    UInt syscode = 0; // Syscall ID for reading
+    UInt syscode = SYSCODE_READ;
 
     const UInt bufferSize = 4096;
     UInt8 buffer[bufferSize];
