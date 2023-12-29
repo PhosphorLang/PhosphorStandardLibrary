@@ -8,7 +8,7 @@ String createString (const UInt8* data, UInt size)
 {
     const UInt stringSize = size + sizeof(UInt);
 
-    UInt8* stringArray = alloc(stringSize);
+    UInt8* stringArray = allocate(stringSize);
 
     UInt* stringIntArray = (UInt*)stringArray;
 

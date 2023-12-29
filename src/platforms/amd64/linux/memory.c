@@ -5,7 +5,8 @@
  * @param size The size of the memory block to allocate.
  * @return The pointer to the allocated memory.
  */
-void* alloc (UInt size)
+void* allocate (UInt size) asm ("Standard.Memory.allocate");
+void* allocate (UInt size)
 {
     void* address = 0;
     UInt prot = 0x3; // 0x3 = PROT_READ|PROT_WRITE

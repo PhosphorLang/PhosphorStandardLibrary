@@ -69,7 +69,7 @@ String readLine ()
         {
             // Allocate memory for the new total result size:
             UInt newSize = resultSize + bytesRead;
-            UInt8* newResult = alloc(newSize);
+            UInt8* newResult = allocate(newSize);
 
             // Copy the old result and the buffer to the new result:
             copy(newResult, result, resultSize);

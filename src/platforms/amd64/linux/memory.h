@@ -3,5 +3,5 @@
 #include "../../common/memory.h"
 #include "../../common/types.h"
 
-void* alloc (UInt size);
+void* allocate (UInt size) asm ("Standard.Memory.allocate");
 void free (const void* address, UInt size);
