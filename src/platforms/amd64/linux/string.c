@@ -45,6 +45,19 @@ void setIndex (const String string, const UInt index, const String character)
     newDataArray[index] = character->data[0];
 }
 
+Int getIndexByte (const String string, const UInt index) asm ("\"Standard.String~getIndexByte\"");
+Int getIndexByte (const String string, const UInt index)
+{
+    return createString(string->data[index], 1);
+}
+
+void setIndexByte (const String string, const UInt index, const Int value) asm ("\"Standard.String~setIndexByte\"");
+void setIndexByte (const String string, const UInt index, const Int value)
+{
+    UInt8* newDataArray = string->data;
+    newDataArray[index] = value;
+}
+
 UInt getLength (const String string) asm ("\"Standard.String~getLength\"");
 UInt getLength (const String string)
 {
