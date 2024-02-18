@@ -35,7 +35,9 @@ String concatenate (const String string1, const String string2)
 String getIndex (const String string, const UInt index) asm ("\"Standard.String~getIndex\"");
 String getIndex (const String string, const UInt index)
 {
-    return createString(string->data[index], 1);
+    const UInt8* indexedArray = string->data + index;
+
+    return createString(indexedArray, 1);
 }
 
 void setIndex (const String string, const UInt index, const String character) asm ("\"Standard.String~setIndex\"");
