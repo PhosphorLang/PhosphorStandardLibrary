@@ -29,6 +29,7 @@ void* allocate (UInt size)
  * @param address The pointer to the memory to free.
  * @param size The size of the memory block.
  */
+void free (const void* address, UInt size) asm ("\"Standard.Memory~free\"");
 void free (const void* address, UInt size)
 {
     UInt syscode = SYSCODE_MEMORY_UNMAP;
