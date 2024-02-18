@@ -48,7 +48,7 @@ void setIndex (const String string, const UInt index, const String character)
 Int getIndexByte (const String string, const UInt index) asm ("\"Standard.String~getIndexByte\"");
 Int getIndexByte (const String string, const UInt index)
 {
-    return createString(string->data[index], 1);
+    return string->data[index];
 }
 
 void setIndexByte (const String string, const UInt index, const Int value) asm ("\"Standard.String~setIndexByte\"");
