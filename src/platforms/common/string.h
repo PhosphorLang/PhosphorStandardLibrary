@@ -15,4 +15,4 @@ typedef struct
  */
 typedef const StringValue* String;
 
-Bool stringsAreEqual (const String string1, const String string2) asm ("Standard.String.stringsAreEqual");
+Bool stringsAreEqual (const String string1, const String string2) asm ("\"Standard.String~stringsAreEqual\"");

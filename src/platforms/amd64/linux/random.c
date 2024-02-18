@@ -3,7 +3,7 @@
 
 static Int seed = 0;
 
-void randomise () asm ("Standard.Random.randomise");
+void randomise () asm ("\"Standard.Random~randomise\"");
 void randomise ()
 {
     UInt syscode = SYSCODE_GET_RANDOM;
@@ -29,7 +29,7 @@ void randomise ()
     // TODO: Check return value.
 }
 
-Int getRandom (Int range) asm ("Standard.Random.getRandom");
+Int getRandom (Int range) asm ("\"Standard.Random~getRandom\"");
 Int getRandom (Int range)
 {
     seed = (seed * 1103515245 + 12345);

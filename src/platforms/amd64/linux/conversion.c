@@ -1,7 +1,7 @@
 #include "../../common/types.h"
 #include "string.h"
 
-String intToString (Int integer) asm ("Standard.Conversion.intToString");
+String intToString (Int integer) asm ("\"Standard.Conversion~intToString\"");
 String intToString (Int integer)
 {
     // The following is a hack.
@@ -43,7 +43,7 @@ String intToString (Int integer)
     return result;
 }
 
-Int stringToInt (const String string) asm ("Standard.Conversion.stringToInt");
+Int stringToInt (const String string) asm ("\"Standard.Conversion~stringToInt\"");
 Int stringToInt (const String string)
 {
     if (string->size == 0)

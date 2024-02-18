@@ -1,7 +1,7 @@
 #include "types.h"
 #include "string.h"
 
-Bool stringsAreEqual (const String string1, const String string2) asm ("Standard.String.stringsAreEqual");
+Bool stringsAreEqual (const String string1, const String string2) asm ("\"Standard.String~stringsAreEqual\"");
 Bool stringsAreEqual (const String string1, const String string2)
 {
     if (string1->size != string2->size)
