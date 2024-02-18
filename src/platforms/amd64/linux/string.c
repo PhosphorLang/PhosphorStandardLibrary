@@ -35,22 +35,14 @@ String concatenate (const String string1, const String string2)
 String getIndex (const String string, const UInt index) asm ("\"Standard.String~getIndex\"");
 String getIndex (const String string, const UInt index)
 {
-    UInt8* newDataArray = allocate(1);
-    newDataArray[0] = string->data[index];
-
-    return createString(newDataArray, 1);
+    return createString(string->data[index], 1);
 }
 
-String setIndex (const String string, const UInt index, const String character) asm ("\"Standard.String~setIndex\"");
-String setIndex (const String string, const UInt index, const String character)
+void setIndex (const String string, const UInt index, const String character) asm ("\"Standard.String~setIndex\"");
+void setIndex (const String string, const UInt index, const String character)
 {
-    UInt8* newDataArray = allocate(string->size);
-
-    copy(newDataArray, string->data, string->size);
-
+    UInt8* newDataArray = string->data;
     newDataArray[index] = character->data[0];
-
-    return createString(newDataArray, string->size);
 }
 
 UInt getLength (const String string) asm ("\"Standard.String~getLength\"");
