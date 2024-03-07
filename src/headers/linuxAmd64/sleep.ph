@@ -1,3 +1,3 @@
 module Standard.Sleep;
 
-header function sleep (milliseconds: UInt);
+header function sleep (milliseconds: Integer); // FIXME: This should be Cardinal.
