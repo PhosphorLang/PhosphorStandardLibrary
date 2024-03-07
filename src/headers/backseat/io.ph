@@ -1,1 +1,1 @@
-header function write (character: Int);
+header function write (character: Integer);

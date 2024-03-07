@@ -3,5 +3,5 @@
 #include "../../common/memory.h"
 #include "../../common/types.h"
 
-void* allocate (UInt size) asm ("\"Standard.Memory~allocate\"");
-void free (const void* address, UInt size) asm ("\"Standard.Memory~free\"");
+void* allocate (Cardinal size) asm ("\"Standard.Memory~allocate\"");
+void free (const void* address, Cardinal size) asm ("\"Standard.Memory~free\"");

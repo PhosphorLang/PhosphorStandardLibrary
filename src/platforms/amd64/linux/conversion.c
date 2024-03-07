@@ -1,18 +1,18 @@
 #include "../../common/types.h"
 #include "string.h"
 
-String intToString (Int integer) asm ("\"Standard.Conversion~intToString\"");
-String intToString (Int integer)
+String intToString (Integer integer) asm ("\"Standard.Conversion~intToString\"");
+String intToString (Integer integer)
 {
     // The following is a hack.
     // The string length of a number in decimal (including the minus for negative values) is never greater then three times plus one
     // of the number of bytes in binary notation. We need this for the memory allocation of the buffer.
-    const UInt maxStringLength = sizeof(Int) * 3 + 1;
+    const Cardinal maxStringLength = sizeof(Integer) * 3 + 1;
 
-    UInt8 characters[maxStringLength];
+    Cardinal8 characters[maxStringLength];
 
-    UInt stringLength = 0;
-    Int rest = integer;
+    Cardinal stringLength = 0;
+    Integer rest = integer;
 
     if (rest < 0)
     {
@@ -21,7 +21,7 @@ String intToString (Int integer)
 
     do
     {
-        UInt8 character = rest % 10 + '0';
+        Cardinal8 character = rest % 10 + '0';
 
         characters[maxStringLength - stringLength - 1] = character;
 
@@ -43,18 +43,18 @@ String intToString (Int integer)
     return result;
 }
 
-Int stringToInt (const String string) asm ("\"Standard.Conversion~stringToInt\"");
-Int stringToInt (const String string)
+Integer stringToInt (const String string) asm ("\"Standard.Conversion~stringToInt\"");
+Integer stringToInt (const String string)
 {
     if (string->size == 0)
     {
         return 0;
     }
 
-    Int result = 0;
-    UInt multiplier = 1;
+    Integer result = 0;
+    Cardinal multiplier = 1;
 
-    for (Int i = string->size - 1; i >= 0; i--)
+    for (Integer i = string->size - 1; i >= 0; i--)
     {
         if ((string->data[i] >= '0') && (string->data[i] <= '9'))
         {

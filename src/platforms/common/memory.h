@@ -2,4 +2,4 @@
 
 #include "types.h"
 
-void copy (UInt8* destination, const UInt8* source, UInt size);
+void copy (Cardinal8* destination, const Cardinal8* source, Cardinal size);

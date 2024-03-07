@@ -10,10 +10,10 @@
 void write (const String text) asm ("\"Standard.Io~write\"");
 void write (const String text)
 {
-    Int fileDescriptor = 1; // File descriptor ID for stdout
-    UInt syscode = SYSCODE_WRITE;
+    Integer fileDescriptor = 1; // File descriptor ID for stdout
+    Cardinal syscode = SYSCODE_WRITE;
 
-    Int result;
+    Integer result;
 
     asm volatile ("syscall" : "=a" (result)
                             : "d" (text->size), "S" (text->data), "D" (fileDescriptor), "a" (syscode)
@@ -29,7 +29,7 @@ void write (const String text)
 void writeLine (const String text) asm ("\"Standard.Io~writeLine\"");
 void writeLine (const String text)
 {
-    UInt8* lineBreakLiteralChar = { "\n" };
+    Cardinal8* lineBreakLiteralChar = { "\n" };
 
     String lineBreak = createString(lineBreakLiteralChar, 1);
 
@@ -48,15 +48,15 @@ void writeLine (const String text)
 String readLine () asm ("\"Standard.Io~readLine\"");
 String readLine ()
 {
-    Int fileDescriptor = 0; // File descriptor ID for stdin
-    UInt syscode = SYSCODE_READ;
+    Integer fileDescriptor = 0; // File descriptor ID for stdin
+    Cardinal syscode = SYSCODE_READ;
 
-    const UInt bufferSize = 4096;
-    UInt8 buffer[bufferSize];
+    const Cardinal bufferSize = 4096;
+    Cardinal8 buffer[bufferSize];
 
-    Int bytesRead = 0;
-    UInt resultSize = 0;
-    UInt8* result = null;
+    Integer bytesRead = 0;
+    Cardinal resultSize = 0;
+    Cardinal8* result = null;
 
     while (true)
     {
@@ -69,8 +69,8 @@ String readLine ()
         if (bytesRead > 0)
         {
             // Allocate memory for the new total result size:
-            UInt newSize = resultSize + bytesRead;
-            UInt8* newResult = allocate(newSize);
+            Cardinal newSize = resultSize + bytesRead;
+            Cardinal8* newResult = allocate(newSize);
 
             // Copy the old result and the buffer to the new result:
             copy(newResult, result, resultSize);
@@ -97,7 +97,7 @@ String readLine ()
         }
     }
 
-    UInt stringSize = resultSize;
+    Cardinal stringSize = resultSize;
 
     // Remove the line break at the end if there is one:
     if (result[stringSize - 1] == '\n') // TODO: Replace the hard coded line break with a system dependent constant.

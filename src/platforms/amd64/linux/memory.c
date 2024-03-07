@@ -6,15 +6,15 @@
  * @param size The size of the memory block to allocate.
  * @return The pointer to the allocated memory.
  */
-void* allocate (UInt size) asm ("\"Standard.Memory~allocate\"");
-void* allocate (UInt size)
+void* allocate (Cardinal size) asm ("\"Standard.Memory~allocate\"");
+void* allocate (Cardinal size)
 {
     void* address = 0;
-    UInt prot = 0x3; // 0x3 = PROT_READ|PROT_WRITE
-    register UInt flags asm("r10") = 0x22; // 0x22 = MAP_PRIVATE|MAP_ANONYMOUS
-    register Int fileDescriptor asm("r8") = -1;
-    register UInt offset asm("r9") = 0;
-    UInt syscode = SYSCODE_MEMORY_MAP;
+    Cardinal prot = 0x3; // 0x3 = PROT_READ|PROT_WRITE
+    register Cardinal flags asm("r10") = 0x22; // 0x22 = MAP_PRIVATE|MAP_ANONYMOUS
+    register Integer fileDescriptor asm("r8") = -1;
+    register Cardinal offset asm("r9") = 0;
+    Cardinal syscode = SYSCODE_MEMORY_MAP;
     void* result;
 
     asm volatile ("syscall" : "=a" (result)
@@ -29,12 +29,12 @@ void* allocate (UInt size)
  * @param address The pointer to the memory to free.
  * @param size The size of the memory block.
  */
-void free (const void* address, UInt size) asm ("\"Standard.Memory~free\"");
-void free (const void* address, UInt size)
+void free (const void* address, Cardinal size) asm ("\"Standard.Memory~free\"");
+void free (const void* address, Cardinal size)
 {
-    UInt syscode = SYSCODE_MEMORY_UNMAP;
+    Cardinal syscode = SYSCODE_MEMORY_UNMAP;
 
-    Int result;
+    Integer result;
 
     asm volatile ("syscall" : "=a" (result)
                             : "D" (address), "S" (size), "a" (syscode)
