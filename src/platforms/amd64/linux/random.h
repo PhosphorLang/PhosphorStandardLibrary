@@ -4,4 +4,4 @@
 
 void randomise () asm ("Standard.Random.randomise");
 
-Int getRandom (Int range) asm ("Standard.Random..getRandom");
+Integer getRandom (Integer range) asm ("Standard.Random..getRandom");

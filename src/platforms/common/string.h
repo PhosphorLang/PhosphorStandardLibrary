@@ -5,8 +5,8 @@
 /** A string value contains the size of the data as an integer and the data itself as an array. */
 typedef struct
 {
-    const UInt size;
-    const UInt8 data[];
+    const Cardinal size;
+    const Cardinal8 data[];
 } __attribute__((__packed__)) StringValue;
 
 /**
@@ -15,4 +15,4 @@ typedef struct
  */
 typedef const StringValue* String;
 
-Bool stringsAreEqual (const String string1, const String string2) asm ("\"Standard.String~stringsAreEqual\"");
+Boolean stringsAreEqual (const String string1, const String string2) asm ("\"Standard.String~stringsAreEqual\"");

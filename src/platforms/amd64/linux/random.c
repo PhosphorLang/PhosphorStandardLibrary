@@ -1,17 +1,17 @@
 #include "syscodes.h"
 #include "../../common/types.h"
 
-static Int seed = 0;
+static Integer seed = 0;
 
 void randomise () asm ("\"Standard.Random~randomise\"");
 void randomise ()
 {
-    UInt syscode = SYSCODE_GET_RANDOM;
-    UInt byteCount = sizeof(Int);
-    UInt flags = 0;
+    Cardinal syscode = SYSCODE_GET_RANDOM;
+    Cardinal byteCount = sizeof(Integer);
+    Cardinal flags = 0;
 
-    Int newSeed;
-    Int result;
+    Integer newSeed;
+    Integer result;
 
     asm volatile ("syscall" : "=a" (result)
                             : "D" (&newSeed), "S" (byteCount), "d" (flags),  "a" (syscode)
@@ -29,12 +29,12 @@ void randomise ()
     // TODO: Check return value.
 }
 
-Int getRandom (Int range) asm ("\"Standard.Random~getRandom\"");
-Int getRandom (Int range)
+Integer getRandom (Integer range) asm ("\"Standard.Random~getRandom\"");
+Integer getRandom (Integer range)
 {
     seed = (seed * 1103515245 + 12345);
 
-    Int result = seed % range;
+    Integer result = seed % range;
 
     return result;
 }

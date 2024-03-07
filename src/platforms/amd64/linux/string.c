@@ -4,17 +4,17 @@
 #include "../../common/types.h"
 #include "../../common/string.h"
 
-String createString (const UInt8* data, UInt size)
+String createString (const Cardinal8* data, Cardinal size)
 {
-    const UInt stringSize = size + sizeof(UInt);
+    const Cardinal stringSize = size + sizeof(Cardinal);
 
-    UInt8* stringArray = allocate(stringSize);
+    Cardinal8* stringArray = allocate(stringSize);
 
-    UInt* stringIntArray = (UInt*)stringArray;
+    Cardinal* stringIntArray = (Cardinal*)stringArray;
 
     stringIntArray[0] = size;
 
-    copy(&stringArray[sizeof(UInt)], data, size);
+    copy(&stringArray[sizeof(Cardinal)], data, size);
 
     return (String)stringArray;
 }
