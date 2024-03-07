@@ -22,9 +22,9 @@ String createString (const Cardinal8* data, Cardinal size)
 String concatenate (const String string1, const String string2) asm ("\"Standard.String~concatenate\"");
 String concatenate (const String string1, const String string2)
 {
-    const UInt newSize = string1->size + string2->size;
+    const Cardinal newSize = string1->size + string2->size;
 
-    UInt8* newDataArray = allocate(newSize);
+    Cardinal8* newDataArray = allocate(newSize);
 
     copy(newDataArray, string1->data, string1->size);
     copy(&newDataArray[string1->size], string2->data, string2->size);
@@ -32,36 +32,36 @@ String concatenate (const String string1, const String string2)
     return createString(newDataArray, newSize);
 }
 
-String getIndex (const String string, const UInt index) asm ("\"Standard.String~getIndex\"");
-String getIndex (const String string, const UInt index)
+String getIndex (const String string, const Cardinal index) asm ("\"Standard.String~getIndex\"");
+String getIndex (const String string, const Cardinal index)
 {
-    const UInt8* indexedArray = string->data + index;
+    const Cardinal8* indexedArray = string->data + index;
 
     return createString(indexedArray, 1);
 }
 
-void setIndex (const String string, const UInt index, const String character) asm ("\"Standard.String~setIndex\"");
-void setIndex (const String string, const UInt index, const String character)
+void setIndex (const String string, const Cardinal index, const String character) asm ("\"Standard.String~setIndex\"");
+void setIndex (const String string, const Cardinal index, const String character)
 {
-    UInt8* newDataArray = string->data;
+    Cardinal8* newDataArray = string->data;
     newDataArray[index] = character->data[0];
 }
 
-Int getIndexByte (const String string, const UInt index) asm ("\"Standard.String~getIndexByte\"");
-Int getIndexByte (const String string, const UInt index)
+Integer getIndexByte (const String string, const Cardinal index) asm ("\"Standard.String~getIndexByte\"");
+Integer getIndexByte (const String string, const Cardinal index)
 {
     return string->data[index];
 }
 
-void setIndexByte (const String string, const UInt index, const Int value) asm ("\"Standard.String~setIndexByte\"");
-void setIndexByte (const String string, const UInt index, const Int value)
+void setIndexByte (const String string, const Cardinal index, const Integer value) asm ("\"Standard.String~setIndexByte\"");
+void setIndexByte (const String string, const Cardinal index, const Integer value)
 {
-    UInt8* newDataArray = string->data;
+    Cardinal8* newDataArray = string->data;
     newDataArray[index] = value;
 }
 
-UInt getLength (const String string) asm ("\"Standard.String~getLength\"");
-UInt getLength (const String string)
+Cardinal getLength (const String string) asm ("\"Standard.String~getLength\"");
+Cardinal getLength (const String string)
 {
     return string->size;
 }

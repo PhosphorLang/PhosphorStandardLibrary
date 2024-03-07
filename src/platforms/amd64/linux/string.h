@@ -7,10 +7,10 @@ String createString (const Cardinal8* data, Cardinal size);
 
 String concatenate (const String string1, const String string2);
 
-String getIndex (const String string, const UInt index);
-void setIndex (const String string, const UInt index, const String character);
+String getIndex (const String string, const Cardinal index);
+void setIndex (const String string, const Cardinal index, const String character);
 
-Int getIndexByte (const String string, const UInt index);
-void setIndexByte (const String string, const UInt index, const Int value);
+Integer getIndexByte (const String string, const Cardinal index);
+void setIndexByte (const String string, const Cardinal index, const Integer value);
 
-UInt getLength (const String string);
+Cardinal getLength (const String string);
