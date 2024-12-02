@@ -115,31 +115,6 @@ function targetLinuxAmd64
     copyHeaders "$targetName"
 }
 
-function targetBackseat
-{
-    local targetName="backseat"
-    local targetSubdirectory="backseat"
-
-    prepare "$targetName" "$targetSubdirectory"
-
-    # For Backseat, we combine all Bssembler files into a single one which will function as the standard library:
-    local standardLibraryFile="$BINARY_DIRECTORY/$targetName/standardLibrary.bsm"
-    touch "$standardLibraryFile"
-
-    for sourceFile in "$PLATFORM_SOURCE_DIRECTORY/$targetSubdirectory"/*.bsm ; do
-        # Check if this is really a file and otherwise skip the loop:
-        if ! [ -f $sourceFile ]; then
-            continue
-        fi
-
-        cat "$sourceFile" >> "$standardLibraryFile"
-        # New line:
-        echo "" >> "$standardLibraryFile"
-    done
-
-    copyHeaders "$targetName"
-}
-
 # Compile the contents of a subdirectory with the given compile command.
 function compileSubdirectory
 {
@@ -211,11 +186,7 @@ function build
     case $buildTarget in
         all)
             targetAmd64
-            targetBackseat
             targetLinuxAmd64
-            ;;
-        backseat)
-            targetBackseat
             ;;
         amd64)
             targetAmd64
@@ -240,12 +211,12 @@ case $target in
     clean)
         clean
         ;;
-    all|amd64|backseat|linuxAmd64|stable)
+    all|amd64|linuxAmd64|stable)
         build $target
         ;;
     -h|--help|help|*)
         echo "Platform targets:"
-        echo "  amd64, backseat, limuxAmd64"
+        echo "  amd64, limuxAmd64"
         echo "Special targets:"
         echo "  clean - Clean the build directory."
         echo "  all - Build all targets."
