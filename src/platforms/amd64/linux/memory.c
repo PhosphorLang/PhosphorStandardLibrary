@@ -29,6 +29,7 @@ void* allocate (Cardinal size)
  * @param address The pointer to the memory to free.
  * @param size The size of the memory block.
  */
+void free (const void* address, Cardinal size) asm ("\"Standard.Memory~free\"");
 void free (const void* address, Cardinal size)
 {
     Cardinal syscode = SYSCODE_MEMORY_UNMAP;
