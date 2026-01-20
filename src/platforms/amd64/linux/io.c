@@ -36,7 +36,7 @@ void writeLine (const String text)
     write(text);
     write(lineBreak);
 
-    free(lineBreak, sizeof (StringValue) + 1);
+    free(lineBreak);
 
     // TODO: Replace the hard coded line break with a system dependent constant.
 }
@@ -79,7 +79,7 @@ String readLine ()
             // Don't forget: Free the old result!
             if (result != null)
             {
-                free(result, resultSize);
+                free(result);
             }
 
             result = newResult;
@@ -108,7 +108,7 @@ String readLine ()
     String readString = createString(result, stringSize);
 
     // Free the full result, including the potentially ignored line break:
-    free(result, resultSize);
+    free(result);
 
     return readString;
 }
